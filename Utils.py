@@ -46,7 +46,8 @@ def rle_decode(rle_string,Image_size)->np.ndarray:
 def get_masks(imageId,encoding_df,Image_size):
     
     rle_strings=list(
-        encoding_df[encoding_df.ImageId==imageId].EncodedPixels)
+        encoding_df[encoding_df.ImageId==imageId
+                    ].EncodedPixels.dropna())
     
     mask=np.zeros([len(rle_strings)]+list(Image_size))
     
@@ -64,7 +65,7 @@ if __name__=="__main__":
     Data_df=pd.read_csv(f"{Data_Dir}/train_ship_segmentations_v2.csv")
     i=3
     
-    test_imageId=Data_df.iloc[3,0]
+    test_imageId=Data_df.iloc[0,0]
     test_img=np.array(
         Image.open(f"{Data_Dir}/train_v2/{test_imageId}"))
     
